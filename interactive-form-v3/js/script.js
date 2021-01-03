@@ -97,4 +97,45 @@ the color options associated with the selected design
 }
 t_Shirt_Info();
 
+/*===========================
 
+===========================*/
+
+function activities_Cost_Time() {
+
+/*===========================
+The code below has been adapted 
+from:https://stackoverflow.com/questions/14544104/checkbox-check-event-listener
+===========================*/
+
+    const activities_Checkboxes = document.querySelectorAll("input[type=checkbox]");
+    let enabled_Checkboxes = []
+
+// Use Array.forEach to add an event listener to each checkbox.
+activities_Checkboxes.forEach(function checkbox(checkbox) {
+  checkbox.addEventListener('change', function() {
+    enabled_Checkboxes = 
+      Array.from(activities_Checkboxes) // Convert activities_Checkboxes to an array to use filter and map.
+      .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
+      .map(i => i.dataset.cost) // Use Array.map to extract only the checkbox data-cost values from the array of objects.
+    
+    function total_Cost_Of_Activities() {
+        const numberArray = enabled_Checkboxes.map(Number) /* Code adapted from: 
+      https://stackoverflow.com/questions/10541770/convert-string-array-to-integer-array */
+
+        const total_Cost = numberArray.reduce(function(a, b) { return a + b; }, 0); /* Code adapted from: 
+      https://stackoverflow.com/questions/1230233/how-to-find-the-sum-of-an-array-of-numbers */
+      
+      document.getElementById('activities-cost').textContent = `Total: $${total_Cost}`
+    }
+
+    total_Cost_Of_Activities();
+      
+  })
+});
+}
+activities_Cost_Time();
+
+
+
+// 'input[data-cost="200"]'
