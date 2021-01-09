@@ -12,7 +12,7 @@ once the user selects the "option" with the value of "Other".
 ===========================*/
 
 function job_Role_Other() {
-    const title_Option = document.getElementById('title')
+    const title_Option = document.getElementById('title');
     const other_Job_Role_InputField = document.getElementById('other-job-role');
 
         other_Job_Role_InputField.style.visibility = 'hidden'
@@ -98,7 +98,8 @@ the color options associated with the selected design
 t_Shirt_Info();
 
 /*===========================
-
+The "activities_Cost_Time" function calculates the total cost of selected activities 
+and correctly updates the form when users select or deselect activities.
 ===========================*/
 
 function activities_Cost_Time() {
@@ -136,6 +137,46 @@ activities_Checkboxes.forEach(function checkbox(checkbox) {
 }
 activities_Cost_Time();
 
+/*===========================
+The "payment_Info" function listens for user changes. 
+When a change is detected, it hides all payment sections in the form’s UI except the selected one.
+===========================*/
+
+function payment_Info() {
+  const payment_Option = document.getElementById('payment');
+  const class_Credit = document.getElementsByClassName('credit-card');
+  const class_Paypal = document.getElementsByClassName('paypal');
+  const class_Bitcoin = document.getElementsByClassName('bitcoin');
+
+/*===========================
+The "credit_By_Default" function selects the "Credit Card" payment option when the page first loads
+===========================*/
+
+  function credit_By_Default() {
+    document.getElementById('payment').value = 'credit-card';
+        class_Paypal[0].style.display = 'none';
+        class_Bitcoin[0].style.display = 'none';
+  }
+
+  credit_By_Default()  
+  
+    payment_Option.addEventListener('change', (e) => {
+          if (e.target.value === 'credit-card') {
+            class_Credit[0].style.display = 'block';
+            class_Paypal[0].style.display = 'none';
+            class_Bitcoin[0].style.display = 'none';
+          } else if (e.target.value === 'paypal') {
+              class_Credit[0].style.display = 'none';
+              class_Paypal[0].style.display = 'block';
+              class_Bitcoin[0].style.display = 'none';
+          } else if (e.target.value === 'bitcoin') {
+              class_Credit[0].style.display = 'none';
+              class_Paypal[0].style.display = 'none';
+              class_Bitcoin[0].style.display = 'block';
+          }
+      })
+}
+payment_Info();
 
 
-// 'input[data-cost="200"]'
+
