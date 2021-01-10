@@ -252,15 +252,48 @@ function form_Validation() {
         function valid_Cvv(cvv) {
             return /[\d]{3}/.test(cvv); 
         }
-        
-        form_Element[0].addEventListener('submit', (e) => {
+
+        function is_Form_Valid() {
             valid_Name(name_Field_Value);
-            valid_Activity();
             valid_Email(email_Field_Value);
-            exp_Month();
-            exp_Year();
+            valid_Credit(credit_Field_Value);
+            valid_Zip_Code(zip_Field_Value);
+            valid_Cvv(cvv_Field_Value);
+        }
 
+        function display_Error_Border() {
+            if (valid_Name(name_Field_Value) === false) {
+                document.getElementById('name').classList.add('error-border');
+            } else if (valid_Name(name_Field_Value) === true) {
+                document.getElementById('name').classList.remove('error-border');
+            } else if (valid_Email(email_Field_Value) === false) {
+                document.getElementById('email').classList.add('error-border');
+                document.getElementById('email-hint').style.display = 'block';
+            } else if (valid_Email(email_Field_Value) === true) {
+                document.getElementById('email').classList.remove('error-border');
+                document.getElementById('email-hint').style.display = 'none';
+            } else if (() && valid_Credit(credit_Field_Value)) {
+                
+            }
+        }
+        
+        is_Form_Valid();
+        valid_Activity();
+        exp_Month();
+        exp_Year();
 
+        form_Element[0].addEventListener('submit', (e) => {
+            if (is_Form_Valid() === false) {
+                e.preventDefault();
+            } else if (exp_Month_Field.className === 'error-border') {
+                e.preventDefault();
+            } else if (exp_Year_Field.className === 'error-border') {
+                e.preventDefault();
+            }
         })
 }
 form_Validation();
+
+// valid_Activity();
+// exp_Month();
+// exp_Year();
