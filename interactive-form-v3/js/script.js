@@ -152,14 +152,13 @@ function payment_Info() {
 The "credit_By_Default" function selects the "Credit Card" payment option when the page first loads
 ===========================*/
 
-  function credit_By_Default() {
+function credit_By_Default() {
     document.getElementById('payment').value = 'credit-card';
         class_Paypal[0].style.display = 'none';
         class_Bitcoin[0].style.display = 'none';
   }
 
   credit_By_Default()  
-  
     payment_Option.addEventListener('change', (e) => {
           if (e.target.value === 'credit-card') {
             class_Credit[0].style.display = 'block';
@@ -178,5 +177,90 @@ The "credit_By_Default" function selects the "Credit Card" payment option when t
 }
 payment_Info();
 
+/*===========================
+
+===========================*/
+
+function form_Validation() {
+    const form_Element = document.getElementsByTagName('form');
+    const name_Field_Value = document.getElementById('name').value;
+    const email_Field_Value = document.getElementById('email').value;
+    const exp_Month_Field = document.getElementById('exp-month');
+    //const exp_Month_Field_Opt = exp_Month_Field.options[exp_Month_Field.selectedIndex];
+    const exp_Year_Field = document.getElementById('exp-year');
+    //const exp_Year_Field_Opt = exp_Year_Field.options[exp_Year_Field.selectedIndex];
+    const credit_Field_Value = document.getElementById('cc-num').value;
+    const zip_Field_Value = document.getElementById('zip').value;
+    const cvv_Field_Value = document.getElementById('cvv').value;
+        
+        function valid_Name(name) {
+            return /^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/.test(name); /* Code adapted from: 
+            https://stackoverflow.com/questions/47718784/regular-expression-for-first-name */
+        }
+
+        function valid_Activity() {
+            const activities_Checkboxes = document.querySelectorAll("input[type=checkbox]");
+            const activities_Box = document.getElementById('activities-box');
+            const activities_Hint = document.getElementById('activities-hint');
+            //let enabled_Checkboxes = []
+
+            activities_Checkboxes.forEach(function checkbox(checkbox) {
+                checkbox.addEventListener('change', (e) => {
+                    if (e.target) {
+                        activities_Box.classList.remove('error-border')
+                        activities_Hint.style.display = 'none';
+                    } else {
+                        activities_Box.classList.add('error-border')
+                        activities_Hint.style.display = 'block';
+                    }
+                })
+                });
+        }
+
+        function valid_Email(email) {
+            return /^[@]+@[^@.]+\.[a-z]+$/i.test(email); 
+        }
+
+        function exp_Month() {
+            exp_Month_Field.addEventListener('change', (e) => {
+                if (e.target) {
+                    document.getElementById('exp-month').classList.remove('error-border')
+                } else {
+                    document.getElementById('exp-month').classList.add('error-border')
+                }
+            })
+        }
+
+        function exp_Year() {
+            exp_Year_Field.addEventListener('change', (e) => {
+                if (e.target) {
+                    document.getElementById('exp-year').classList.remove('error-border')
+                } else {
+                    document.getElementById('exp-year').classList.add('error-border')
+                }
+            })
+        }
+
+        function valid_Credit(credit) {
+            return /[\d]{13,16}/.test(credit); 
+        }
+
+        function valid_Zip_Code(zip) {
+            return /[\d]{5}/.test(zip); 
+        }
+
+        function valid_Cvv(cvv) {
+            return /[\d]{3}/.test(cvv); 
+        }
+        
+        form_Element[0].addEventListener('submit', (e) => {
+            valid_Name(name_Field_Value);
+            valid_Activity();
+            valid_Email(email_Field_Value);
+            exp_Month();
+            exp_Year();
 
 
+        })
+}
+form_Validation();
